@@ -354,11 +354,25 @@ static struct {
     {"Disabled", "Enabled"}
 };
 
+static struct {
+    char* description;
+    unsigned char max_options;
+    unsigned char selection;
+    unsigned char* config_ptr;
+    char* options[2];
+} usb_default_activated = {
+    "USB activated by default",
+    2,
+    0,
+    &(common::getConf()->usb_default_activated),
+    {"Disabled", "Enabled"}
+};
 
 settings_entry* settings_entries[] = {
     (settings_entry*)&language,
     (settings_entry*)&fast_gameboot,
     (settings_entry*)&font,
+    (settings_entry*)&usb_default_activated,        
     (settings_entry*)&scan_save,
     (settings_entry*)&scan_cat,
     (settings_entry*)&scan_dlc,

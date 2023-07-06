@@ -32,6 +32,7 @@ typedef struct {
     unsigned char show_hidden; // show hidden files/folders
     unsigned char browser_icon0; // display ICON0 in File Browser
     unsigned char show_size; // show file size in browser
+    unsigned char usb_default_activated; // usb file transfer activated by default
 } t_conf;
 
 #endif

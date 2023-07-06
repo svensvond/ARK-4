@@ -190,7 +190,8 @@ void GameManager::findEboots(const char* path){
 		if (strstr(dit->d_name, "%") != NULL) continue;
         if (strcmp(dit->d_name, ".") == 0) continue;
         if (strcmp(dit->d_name, "..") == 0) continue;
-        if (!FIO_SO_ISDIR(dit->d_stat.st_attr)) continue;
+        //seems to hide unwanted directorys
+        //if (!FIO_SO_ISDIR(dit->d_stat.st_attr)) continue;
         if (dit->d_name[0] == '.' && !common::getConf()->show_hidden) continue;
         
         string fullpath = Eboot::fullEbootPath(path, dit->d_name);

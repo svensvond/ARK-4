@@ -83,6 +83,10 @@ Browser::Browser(){
     this->firstboot = true;
     this->is_loading = false;
 
+     if (common::getConf()->usb_default_activated){
+        USB::enable();
+    }
+
     t_conf* conf = common::getConf();
     ARKConfig* ark_config = common::getArkConfig();
     if (conf->browser_dir[0]) this->cwd = conf->browser_dir;
@@ -500,7 +504,9 @@ void Browser::refreshDirs(){
     }
 
     if (cwd == ROOT_DIR || cwd == GO_ROOT){
-        devsize = common::beautifySize(common::deviceSize(cwd));
+        if (common::getConf()->show_size){
+            devsize = common::beautifySize(common::deviceSize(cwd));
+        }
     }
     else devsize = "";
 
@@ -522,7 +528,9 @@ void Browser::refreshDirs(){
         }
 
         string ptmp;
-        if (FIO_SO_ISDIR(dit->d_stat.st_attr)){
+        //maniaX - fixes some folders cannot be loaded
+        bool folder_exists = (common::folderExists(ptmp+"/"));
+        if (folder_exists || FIO_SO_ISDIR(dit->d_stat.st_attr)){
             printf("is dir\n");
             if (strlen(dit->d_name) < strlen((char*)pri_dirent)){
                 ptmp = string(this->cwd) + string((const char*)pri_dirent);
