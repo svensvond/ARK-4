@@ -528,19 +528,18 @@ void Browser::refreshDirs(){
         }
 
         string ptmp;
-        //maniaX - fixes some folders cannot be loaded
+        ptmp = string(this->cwd) + string((const char*)pri_dirent);
         bool folder_exists = (common::folderExists(ptmp+"/"));
         if (folder_exists || FIO_SO_ISDIR(dit->d_stat.st_attr)){
             printf("is dir\n");
             if (strlen(dit->d_name) < strlen((char*)pri_dirent)){
-                ptmp = string(this->cwd) + string((const char*)pri_dirent);
                 printf("%d: %s\n", (int)common::folderExists(ptmp), ptmp.c_str());
             }
             else{
                 ptmp = string(this->cwd)+string(dit->d_name);
             }
             folders.push_back(new Folder(ptmp+"/"));
-        }
+        }        
         else{
             printf("is file\n");
             if (strlen(dit->d_name) < strlen((char*)pri_dirent)){
