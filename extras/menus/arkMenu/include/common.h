@@ -99,6 +99,7 @@ namespace common{
     extern void stopLoadingThread();
     extern void setThemePath(char* path = NULL);
     extern bool fileExists(const std::string &path);
+    extern bool folderExists_fast(SceIoDirent* dit);
     extern bool folderExists(const std::string &path);
     extern long fileSize(const std::string &path);
     extern u64 deviceSize(const std::string path);

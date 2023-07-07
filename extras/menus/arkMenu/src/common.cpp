@@ -531,6 +531,21 @@ bool common::folderExists(const std::string &path){
     return (stat(path.c_str(), &sb) == 0 && S_ISDIR(sb.st_mode));
 }
 
+bool common::folderExists_fast(SceIoDirent* dit){
+    std::ostringstream oss;
+    oss << dit->d_stat.st_attr;
+    
+    char result[500];
+    strcpy(result," ");
+    strcat(result,dit->d_name);
+    strcat(result,": type: ");
+    strcat(result,oss.str().c_str());
+    strcat(result,"\n");
+    printf(result);        
+    
+    return (dit->d_stat.st_attr == FIO_SO_IFDIR || dit->d_stat.st_attr == 48 || dit->d_stat.st_attr == 22);
+}
+
 long common::fileSize(const std::string &path){
     struct stat stat_buf;
     int rc = stat(path.c_str(), &stat_buf);

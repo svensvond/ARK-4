@@ -529,13 +529,10 @@ void Browser::refreshDirs(){
 
         string ptmp;
         ptmp = string(this->cwd) + string((const char*)pri_dirent);
-        bool folder_exists = (common::folderExists(ptmp+"/"));
-        if (folder_exists || FIO_SO_ISDIR(dit->d_stat.st_attr)){
+
+        if (common::folderExists_fast(dit)) {
             printf("is dir\n");
-            if (strlen(dit->d_name) < strlen((char*)pri_dirent)){
-                printf("%d: %s\n", (int)common::folderExists(ptmp), ptmp.c_str());
-            }
-            else{
+            if (!(strlen(dit->d_name) < strlen((char*)pri_dirent))){
                 ptmp = string(this->cwd)+string(dit->d_name);
             }
             folders.push_back(new Folder(ptmp+"/"));
@@ -551,8 +548,8 @@ void Browser::refreshDirs(){
             }
             files.push_back(new File(ptmp));
         }
-            
-    }
+    }            
+    
     printf("closing and cleaning\n");
     sceIoDclose(dir);
 
